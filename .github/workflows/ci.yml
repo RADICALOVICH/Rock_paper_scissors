@@ -8,7 +8,16 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [
+          ubuntu-latest,
+          windows-latest,
+          macos-14,           # Intel
+          macos-14-arm64      # Apple Silicon
+        ]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout code
