@@ -73,11 +73,3 @@ jobs:
             target/dependency-check-report.xml
             target/dependency-check-report.json
           retention-days: 7
-
-      - name: Upload Dependency-Track upload log artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: dependency-track-upload
-          path: dtrack-upload.json
-          retention-days: 7
