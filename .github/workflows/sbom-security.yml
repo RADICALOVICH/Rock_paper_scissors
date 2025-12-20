@@ -1,4 +1,4 @@
-name: SBOM + SCA (PR only)
+name: SBOM + SCA
 
 on:
   pull_request:
@@ -58,7 +58,7 @@ jobs:
           curl -sS -X POST "$DTRACK_URL/api/v1/bom" \
             -H "X-Api-Key: $DTRACK_API_KEY" \
             -F "project=$DTRACK_PROJECT_UUID" \
-            -F "bom=@target/sbom.json" | tee dtrack-upload.json
+            -F "bom=@$GITHUB_WORKSPACE/target/sbom.json"
 
       - name: Run OWASP Dependency-Check
         run: mvn dependency-check:check
@@ -72,12 +72,4 @@ jobs:
             target/dependency-check-report.html
             target/dependency-check-report.xml
             target/dependency-check-report.json
-          retention-days: 7
-
-      - name: Upload Dependency-Track upload log artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: dependency-track-upload
-          path: dtrack-upload.json
           retention-days: 7
