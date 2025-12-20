@@ -1,4 +1,4 @@
-name: SBOM + SCA (PR only)
+name: SBOM + SCA
 
 on:
   pull_request:
