@@ -55,13 +55,10 @@ jobs:
           DTRACK_API_KEY: ${{ secrets.DTRACK_API_KEY }}
           DTRACK_PROJECT_UUID: ${{ secrets.DTRACK_PROJECT_UUID }}
         run: |
-          test -f target/sbom.json || (echo "SBOM not found: target/sbom.json" && exit 1)
-
           curl -sS -X POST "$DTRACK_URL/api/v1/bom" \
             -H "X-Api-Key: $DTRACK_API_KEY" \
             -F "project=$DTRACK_PROJECT_UUID" \
             -F "bom=@$GITHUB_WORKSPACE/target/sbom.json"
-      
 
       - name: Run OWASP Dependency-Check
         run: mvn dependency-check:check
